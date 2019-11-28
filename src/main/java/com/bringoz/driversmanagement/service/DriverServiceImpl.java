@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.bringoz.driversmanagement.exception.DriverManagmentExceptions;
 import com.bringoz.driversmanagement.model.Driver;
 import com.bringoz.driversmanagement.model.DriverStatus;
 import com.bringoz.driversmanagement.repository.DriverRepository;
@@ -20,8 +21,12 @@ public class DriverServiceImpl implements IDriverService {
 	private DriverRepository driverRepository;
 
 	@Override
-	public void create(Driver driver) {
+	public void create(Driver driver) throws DriverManagmentExceptions {
+		if(driverRepository.existsById(driver.getId())) {
+			throw new DriverManagmentExceptions("Driver with this ID is already exist");
+		} else {
 		driverRepository.save(driver);
+		}
 	}
 
 	@Override
@@ -30,7 +35,11 @@ public class DriverServiceImpl implements IDriverService {
 	}
 
 	@Override
-	public void update(Driver driver) {
+	public void update(Driver driver) throws DriverManagmentExceptions {
+		if(driverRepository.existsById(driver.getId())) {
+			throw new DriverManagmentExceptions("Driver with this ID is already exist");
+		} else {
+		
 		Driver updatedDriver = driverRepository.findById(driver.getId()).get();
 		updatedDriver.setAddress(driver.getAddress());
 		updatedDriver.setAge(driver.getAge());
@@ -39,32 +48,49 @@ public class DriverServiceImpl implements IDriverService {
 		updatedDriver.setEnd(driver.getEnd());
 		updatedDriver.setStatus(driver.getStatus());
 		driverRepository.save(updatedDriver);
+		}
 	}
 
 	@Override
-	public Driver findById(Long id) {
-		return driverRepository.findById(id).get();
+	public Driver findById(Long id) throws DriverManagmentExceptions {
+		if(driverRepository.existsById(id)) {
+			return driverRepository.findById(id).get();
+		} else {
+			throw new DriverManagmentExceptions("Driver with id "+id + " not found");
+		}
 	}
 
 	@Override
-	public void changeStatusToActive(Long driverId) {
+	public void changeStatusToActive(Long driverId) throws DriverManagmentExceptions {
 		Driver driver = driverRepository.findById(driverId).get();
+		if(driver!=null) {
 		driver.setStatus(DriverStatus.ACTIVE);
 		driverRepository.save(driver);
+		} else {
+			throw new DriverManagmentExceptions("Driver with id "+driverId + " not found");
+		}
 	}
 	
 	@Override
-	public void changeStatusToInactive(Long driverId) {
+	public void changeStatusToInactive(Long driverId) throws DriverManagmentExceptions {
 		Driver driver = driverRepository.findById(driverId).get();
-		driver.setStatus(DriverStatus.INACTIVE);
-		driverRepository.save(driver);
+		if(driver!=null) {
+			driver.setStatus(DriverStatus.INACTIVE);
+			driverRepository.save(driver);
+			} else {
+				throw new DriverManagmentExceptions("Driver with id "+driverId + " not found");
+			}
 	}
 	
 	@Override
-	public void changeStatusToDelivering(Long driverId) {
+	public void changeStatusToDelivering(Long driverId) throws DriverManagmentExceptions {
 		Driver driver = driverRepository.findById(driverId).get();
-		driver.setStatus(DriverStatus.DELIVERING);
-		driverRepository.save(driver);
+		if(driver!=null) {
+			driver.setStatus(DriverStatus.DELIVERING);
+			driverRepository.save(driver);
+			} else {
+				throw new DriverManagmentExceptions("Driver with id "+driverId + " not found");
+			}
 	}
 
 	@Override

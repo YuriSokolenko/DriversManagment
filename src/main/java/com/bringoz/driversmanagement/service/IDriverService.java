@@ -4,18 +4,19 @@ import java.time.LocalTime;
 import java.util.Collection;
 import java.util.List;
 
+import com.bringoz.driversmanagement.exception.DriverManagmentExceptions;
 import com.bringoz.driversmanagement.model.Driver;
 import com.bringoz.driversmanagement.model.DriverStatus;
 
 public interface IDriverService {
 
-	public void create (Driver driver);
+	public void create (Driver driver) throws DriverManagmentExceptions;
 	public void remove (long driverId);
-	public void update (Driver driver);
-	public Driver findById (Long id);
-	public void changeStatusToActive(Long driverId);
-	public void changeStatusToInactive(Long driverId);
-	public void changeStatusToDelivering(Long driverId);
+	public void update (Driver driver) throws DriverManagmentExceptions;
+	public Driver findById (Long id) throws DriverManagmentExceptions;
+	public void changeStatusToActive(Long driverId) throws DriverManagmentExceptions;
+	public void changeStatusToInactive(Long driverId) throws DriverManagmentExceptions;
+	public void changeStatusToDelivering(Long driverId) throws DriverManagmentExceptions;
 	
 	public List<Driver> findAllDrivers();
 	public List<Driver> findAllActive();

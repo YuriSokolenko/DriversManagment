@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bringoz.driversmanagement.exception.DriverManagmentExceptions;
 import com.bringoz.driversmanagement.model.Driver;
 import com.bringoz.driversmanagement.model.DriverStatus;
 import com.bringoz.driversmanagement.service.DriverServiceImpl;
@@ -28,13 +29,13 @@ public class DriverController {
 	
 	
 	@RequestMapping(value = "createDriver", method=RequestMethod.POST)
-	public ResponseEntity<String> createDriver(@RequestBody Driver driver) {
+	public ResponseEntity<String> createDriver(@RequestBody Driver driver) throws DriverManagmentExceptions {
 		driverService.create(driver);
 		return ResponseEntity.ok().body("New Driver has been saved");
 	}
 
 	@RequestMapping(value = "getDriverById", method=RequestMethod.GET)
-	public Driver getDriverById(@RequestParam Long id) {
+	public Driver getDriverById(@RequestParam Long id) throws DriverManagmentExceptions {
 		return driverService.findById(id);
 	}
 	
@@ -44,7 +45,7 @@ public class DriverController {
 	}
 	
 	@RequestMapping(value = "getAllActiveDrivers", method=RequestMethod.GET)
-	public List<Driver> getAllDriversByStatus() {
+	public List<Driver> getAllActiveDrivers() {
 		return driverService.findAllActive();
 	}
 	
@@ -59,7 +60,7 @@ public class DriverController {
 	}
 	
 	@RequestMapping(value = "updateDriver", method = RequestMethod.POST)
-	public ResponseEntity<String> updateDriver(@RequestBody Driver driver){
+	public ResponseEntity<String> updateDriver(@RequestBody Driver driver) throws DriverManagmentExceptions{
 		driverService.update(driver);
 		return ResponseEntity.ok().body("Driver with id: " + driver.getId() + " successfully updated ");
 	}
@@ -71,19 +72,19 @@ public class DriverController {
 	}
 	
 	@RequestMapping(value = "changeStatusToActive/{id}", method=RequestMethod.POST)
-	public ResponseEntity<String> changeStatusToActive(@PathVariable("id") long id) {
+	public ResponseEntity<String> changeStatusToActive(@PathVariable("id") long id) throws DriverManagmentExceptions {
 		 driverService.changeStatusToActive(id);
 		 return	ResponseEntity.ok().body("Driver status changed to ACTIVE");
 	}
 	
 	@RequestMapping(value = "changeStatusToInactive/{id}", method=RequestMethod.POST)
-	public ResponseEntity<String> changeStatusToInactive(@PathVariable("id") long id) {
+	public ResponseEntity<String> changeStatusToInactive(@PathVariable("id") long id) throws DriverManagmentExceptions {
 		driverService.changeStatusToInactive(id);
 		return	ResponseEntity.ok().body("Driver status changed to INACTIVE");
 	}
 	
 	@RequestMapping(value = "changeStatusToDelivering/{id}", method=RequestMethod.POST)
-	public ResponseEntity<String> changeStatusToDelivering(@PathVariable("id") long id) {
+	public ResponseEntity<String> changeStatusToDelivering(@PathVariable("id") long id) throws DriverManagmentExceptions {
 		driverService.changeStatusToDelivering(id);
 		return	ResponseEntity.ok().body("Driver status changed to DELIVERING");
 	}

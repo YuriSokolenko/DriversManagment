@@ -1,9 +1,5 @@
 package com.bringoz.driversmanagement.model;
 
-import java.util.NoSuchElementException;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 
 public enum DriverStatus {
 
@@ -17,4 +13,8 @@ public enum DriverStatus {
     private DriverStatus (String name) {
         this.name = name;
     }
+
+	public String getName() {
+		return name;
+	}
 }
