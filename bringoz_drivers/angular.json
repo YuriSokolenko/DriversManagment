@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/AngularJwtAuth",
+            "outputPath": "dist/bringoz_drivers",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -50,18 +50,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "AngularJwtAuth:build"
+            "browserTarget": "bringoz_drivers:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "AngularJwtAuth:build:production"
+              "browserTarget": "bringoz_drivers:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "AngularJwtAuth:build"
+            "browserTarget": "bringoz_drivers:build"
           }
         },
         "test": {
@@ -103,7 +103,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "AngularJwtAuth:serve"
+            "devServerTarget": "bringoz_drivers:serve"
           }
         },
         "lint": {
@@ -118,5 +118,5 @@
       }
     }
   },
-  "defaultProject": "AngularJwtAuth"
+  "defaultProject": "bringoz_drivers"
 }
