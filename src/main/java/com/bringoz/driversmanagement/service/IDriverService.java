@@ -1,12 +1,10 @@
 package com.bringoz.driversmanagement.service;
 
 import java.time.LocalTime;
-import java.util.Collection;
 import java.util.List;
 
 import com.bringoz.driversmanagement.exception.DriverManagmentExceptions;
 import com.bringoz.driversmanagement.model.Driver;
-import com.bringoz.driversmanagement.model.DriverStatus;
 
 public interface IDriverService {
 

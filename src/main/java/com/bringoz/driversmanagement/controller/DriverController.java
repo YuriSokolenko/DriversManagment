@@ -3,11 +3,11 @@ package com.bringoz.driversmanagement.controller;
 import java.time.LocalTime;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bringoz.driversmanagement.exception.DriverManagmentExceptions;
 import com.bringoz.driversmanagement.model.Driver;
-import com.bringoz.driversmanagement.model.DriverStatus;
 import com.bringoz.driversmanagement.service.DriverServiceImpl;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/driver-service")
+@RequestMapping("/api/driver-service/")
 public class DriverController {
 	
 	@Autowired
@@ -34,8 +34,8 @@ public class DriverController {
 		return ResponseEntity.ok().body("New Driver has been saved");
 	}
 
-	@RequestMapping(value = "getDriverById", method=RequestMethod.GET)
-	public Driver getDriverById(@RequestParam Long id) throws DriverManagmentExceptions {
+	@RequestMapping(value = "getDriverById/{id}", method=RequestMethod.GET)
+	public Driver getDriverById(@PathVariable ("id") Long id) throws DriverManagmentExceptions {
 		return driverService.findById(id);
 	}
 	
@@ -65,7 +65,7 @@ public class DriverController {
 		return ResponseEntity.ok().body("Driver with id: " + driver.getId() + " successfully updated ");
 	}
 	
-	@RequestMapping(value = "removeDriver/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "removeDriver/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<String> removeDriverById(@PathVariable("id") long id){
 		driverService.remove(id);
 		return ResponseEntity.ok().body("Driver with id: " + id + " has been removed");
@@ -90,9 +90,9 @@ public class DriverController {
 	}
 	
 	@RequestMapping(value = "availableDriver", method = RequestMethod.POST)
-	public List<Driver> getAllAvailableDriversByTime(@RequestParam("startTime")
+	public List<Driver> getAllAvailableDriversByTime(@RequestParam("start")
 									   @DateTimeFormat(pattern = "HH:mm:ss") LocalTime startTime, 
-									   @RequestParam("endTime")
+									   @RequestParam("end")
 									   @DateTimeFormat(pattern = "HH:mm:ss") LocalTime endTime ) {
 		return driverService.findAllAvailableByTime(startTime, endTime);
 	}
